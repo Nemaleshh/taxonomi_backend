@@ -1,0 +1,14 @@
+{
+    "best_model": "model",
+    "best_score": 0.9065592240477414,
+    "features": [
+        "unemployment_rate",
+        "personal_consumption",
+        "govt_expenditure",
+        "m1_money_supply",
+        "m2_money_supply",
+        "federal_debt"
+    ],
+    "creation_date": "2025-02-28 22:24:13",
+    "model_path": "models/best_gdp_model.pkl"
+}
