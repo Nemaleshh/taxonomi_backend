@@ -257,12 +257,9 @@ def calculate_allocations(total_budget):
     except Exception as e:
         print(f"Calculation error: {str(e)}")
         return None
-# Ensure models and artifacts are loaded on startup
-try:
+
+if __name__ == '__main__':
+
     load_model()
     load_artifacts()
-except Exception as e:
-    print(f"Startup failed: {e}")
-
-# ✅ Vercel requires only `app`
-app = app
+    app.run()

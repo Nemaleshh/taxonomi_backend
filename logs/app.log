@@ -1,0 +1,90 @@
+2025-03-07 21:57:18,819 ERROR: Unhandled Exception [in D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py:143]
+Traceback (most recent call last):
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 239, in initialize
+    load_artifacts()
+    ~~~~~~~~~~~~~~^^
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 223, in load_artifacts
+    main_sectors = joblib.load('investment_models/main_sectors.pkl')
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\numpy_pickle.py", line 650, in load
+    with open(filename, 'rb') as f:
+         ~~~~^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'investment_models/main_sectors.pkl'
+2025-03-07 21:57:42,774 ERROR: Unhandled Exception [in D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py:143]
+Traceback (most recent call last):
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 239, in initialize
+    load_artifacts()
+    ~~~~~~~~~~~~~~^^
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 223, in load_artifacts
+    main_sectors = joblib.load('investment_models/main_sectors.pkl')
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\numpy_pickle.py", line 650, in load
+    with open(filename, 'rb') as f:
+         ~~~~^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'investment_models/main_sectors.pkl'
+2025-03-07 21:57:44,438 ERROR: Unhandled Exception [in D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py:143]
+Traceback (most recent call last):
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 239, in initialize
+    load_artifacts()
+    ~~~~~~~~~~~~~~^^
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 223, in load_artifacts
+    main_sectors = joblib.load('investment_models/main_sectors.pkl')
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\numpy_pickle.py", line 650, in load
+    with open(filename, 'rb') as f:
+         ~~~~^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'investment_models/main_sectors.pkl'
+2025-03-07 21:57:52,475 ERROR: Unhandled Exception [in D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py:143]
+Traceback (most recent call last):
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 239, in initialize
+    load_artifacts()
+    ~~~~~~~~~~~~~~^^
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 223, in load_artifacts
+    main_sectors = joblib.load('investment_models/main_sectors.pkl')
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\numpy_pickle.py", line 650, in load
+    with open(filename, 'rb') as f:
+         ~~~~^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'investment_models/main_sectors.pkl'
+2025-03-07 21:57:56,272 ERROR: Unhandled Exception [in D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py:143]
+Traceback (most recent call last):
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 239, in initialize
+    load_artifacts()
+    ~~~~~~~~~~~~~~^^
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 223, in load_artifacts
+    main_sectors = joblib.load('investment_models/main_sectors.pkl')
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\numpy_pickle.py", line 650, in load
+    with open(filename, 'rb') as f:
+         ~~~~^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'investment_models/main_sectors.pkl'
+2025-03-07 21:58:06,975 ERROR: Unhandled Exception [in D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py:143]
+Traceback (most recent call last):
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 239, in initialize
+    load_artifacts()
+    ~~~~~~~~~~~~~~^^
+  File "D:\projects\TX\taxonomist-iiit\flask\backend\taxanomi\test.py", line 223, in load_artifacts
+    main_sectors = joblib.load('investment_models/main_sectors.pkl')
+  File "C:\Users\Nemaleshwar H\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\numpy_pickle.py", line 650, in load
+    with open(filename, 'rb') as f:
+         ~~~~^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'investment_models/main_sectors.pkl'
