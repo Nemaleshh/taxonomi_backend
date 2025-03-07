@@ -257,10 +257,12 @@ def calculate_allocations(total_budget):
     except Exception as e:
         print(f"Calculation error: {str(e)}")
         return None
-
-if __name__ == '__main__':
-    os.makedirs('models', exist_ok=True)
-    os.makedirs('investment_models', exist_ok=True)
+# Ensure models and artifacts are loaded on startup
+try:
     load_model()
     load_artifacts()
-    app.run(host='0.0.0.0', port=5000, debug=False)
+except Exception as e:
+    print(f"Startup failed: {e}")
+
+# ✅ Vercel requires only `app`
+app = app
