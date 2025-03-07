@@ -2,7 +2,7 @@
 flask==2.3.2
 flask-cors==4.0.0
 joblib==1.3.2
-numpy==1.24.4  # Pinned to a stable version to avoid numpy._core issues
+numpy  # Pinned to a stable version to avoid numpy._core issues
 pandas==2.1.0
 scikit-learn==1.3.0
 
