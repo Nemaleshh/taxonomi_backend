@@ -5,57 +5,15 @@ import numpy as np
 import json
 import os
 import pandas as pd
-import logging
-from logging.handlers import RotatingFileHandler
-from werkzeug.middleware.proxy_fix import ProxyFix
-from flask_talisman import Talisman
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 
-# --- Production Configuration ---
-class Config:
-    DEBUG = False
-    TESTING = False
-    SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(24))
-    MODEL_DIR = os.environ.get('MODEL_DIR', 'models')
-    ALLOWED_ORIGINS = os.environ.get('ALLOWED_ORIGINS', "*")
-
 app = Flask(__name__)
-app.config.from_object(Config())
+CORS(app)
 
-# Security Middleware
-CORS(app, resources={r"/api/*": {"origins": app.config['ALLOWED_ORIGINS']}})
-app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
-Talisman(
-    app,
-    content_security_policy={
-        'default-src': "'self'",
-        'script-src': ["'self'", "'unsafe-inline'"],
-        'style-src': ["'self'", "'unsafe-inline'"]
-    },
-    force_https=os.environ.get('FLASK_ENV') == 'production'
-)
-
-# Production Logging
-if not app.debug:
-    os.makedirs('logs', exist_ok=True)
-    file_handler = RotatingFileHandler(
-        'logs/app.log',
-        maxBytes=1024 * 1024 * 100,  # 100MB
-        backupCount=10
-    )
-    file_handler.setFormatter(logging.Formatter(
-        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
-    ))
-    app.logger.addHandler(file_handler)
-    app.logger.setLevel(logging.INFO)
-
-# --- Original Application Code Below --- 
-# (No changes to existing functionality, only production wrappers added)
-
+# --- GDP Prediction Code ---
 class EconomicFeatureTransformer(BaseEstimator, TransformerMixin):
-    # ... (keep original class implementation unchanged) ...
     def __init__(self, add_interaction=True):
         self.add_interaction = add_interaction
         self.scaler = StandardScaler()
@@ -92,7 +50,6 @@ class EconomicFeatureTransformer(BaseEstimator, TransformerMixin):
         
         return result.values
 
-
 MODEL = None
 MODEL_INFO = None
 REQUIRED_FEATURES = [
@@ -105,7 +62,6 @@ REQUIRED_FEATURES = [
 ]
 
 def load_model():
-    # ... (keep original implementation unchanged) ...
     global MODEL, MODEL_INFO
     try:
         if MODEL is None:
@@ -128,34 +84,8 @@ def load_model():
             print(f"Fallback load failed: {str(fallback_error)}")
             return False
 
-# Error Handlers (Added for production)
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({"error": "Endpoint not found"}), 404
-
-@app.errorhandler(500)
-def internal_error(error):
-    app.logger.error(f"Server Error: {error}", exc_info=True)
-    return jsonify({"error": "Internal server error"}), 500
-
-@app.errorhandler(Exception)
-def handle_exception(e):
-    app.logger.exception("Unhandled Exception")
-    return jsonify(error="Internal server error"), 500
-
-# Health Check Endpoint (Added for production)
-@app.route('/health')
-def health_check():
-    return jsonify(
-        status="healthy",
-        version="1.0",
-        environment=os.environ.get('FLASK_ENV', 'development')
-    )
-
-# --- Original Routes (Unchanged) ---
 @app.route('/api/predict', methods=['POST'])
 def predict_gdp():
-    # ... (keep original implementation unchanged) ...
     if not load_model():
         return jsonify({
             "error": "Model Error",
@@ -210,14 +140,13 @@ def predict_gdp():
             "message": str(e)
         }), 500
 
-# --- Investment Allocation Code (Unchanged) ---
+# --- Investment Allocation Code ---
 main_sectors = None
 trend_models = None
 processed_data = None
 _initialized = False
 
 def load_artifacts():
-    # ... (keep original implementation unchanged) ...
     global main_sectors, trend_models, processed_data
     try:
         main_sectors = joblib.load('investment_models/main_sectors.pkl')
@@ -230,7 +159,6 @@ def load_artifacts():
 
 @app.before_request
 def initialize():
-    # ... (keep original implementation unchanged) ...
     global _initialized
     if not _initialized:
         try:
@@ -242,10 +170,8 @@ def initialize():
             print(f"Initialization failed: {str(e)}")
             raise
 
-
 @app.route('/api/allocate', methods=['POST'])
 def allocate():
-    # ... (keep original implementation unchanged) ...
     try:
         data = request.get_json()
         budget = float(data['budget'])
@@ -271,7 +197,6 @@ def allocate():
         return jsonify({'error': str(e)}), 500
 
 def calculate_allocations(total_budget):
-    # ... (keep original implementation unchanged) ...
     try:
         if 'TOTAL_CALCULATED' not in processed_data.columns:
             processed_data['TOTAL_CALCULATED'] = processed_data[main_sectors].sum(axis=1)
@@ -333,10 +258,8 @@ def calculate_allocations(total_budget):
         print(f"Calculation error: {str(e)}")
         return None
 
-# Production Server Configuration
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
-else:
-    gunicorn_logger = logging.getLogger('gunicorn.error')
-    app.logger.handlers = gunicorn_logger.handlers
-    app.logger.setLevel(gunicorn_logger.level)
+
+    load_model()
+    load_artifacts()
+    app.run()
