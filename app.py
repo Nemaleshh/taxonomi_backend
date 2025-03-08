@@ -55,7 +55,6 @@ if not app.debug:
 # (No changes to existing functionality, only production wrappers added)
 
 class EconomicFeatureTransformer(BaseEstimator, TransformerMixin):
-    # ... (keep original class implementation unchanged) ...
     def __init__(self, add_interaction=True):
         self.add_interaction = add_interaction
         self.scaler = StandardScaler()
@@ -65,17 +64,14 @@ class EconomicFeatureTransformer(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X):
-        if isinstance(X, np.ndarray):
-            X_df = pd.DataFrame(X, columns=[
-                'unemployment_rate', 'personal_consumption',
-                'govt_expenditure', 'm1_money_supply',
-                'm2_money_supply', 'federal_debt'
-            ])
-        else:
-            X_df = X.copy()
-            
+        X_df = pd.DataFrame(X, columns=[
+            'unemployment_rate', 'personal_consumption',
+            'govt_expenditure', 'm1_money_supply',
+            'm2_money_supply', 'federal_debt'
+        ])
         X_scaled = self.scaler.transform(X_df)
         X_scaled_df = pd.DataFrame(X_scaled, columns=X_df.columns)
+        
         result = X_scaled_df.copy()
         
         if self.add_interaction:
@@ -94,7 +90,6 @@ class EconomicFeatureTransformer(BaseEstimator, TransformerMixin):
 
 
 MODEL = None
-MODEL_INFO = None
 REQUIRED_FEATURES = [
     'unemployment_rate',
     'personal_consumption',
@@ -105,28 +100,10 @@ REQUIRED_FEATURES = [
 ]
 
 def load_model():
-    # ... (keep original implementation unchanged) ...
-    global MODEL, MODEL_INFO
-    try:
-        if MODEL is None:
-            with open("models/model_info.json", "r") as f:
-                MODEL_INFO = json.load(f)
-            MODEL = joblib.load(MODEL_INFO["model_path"])
-            print(f"Successfully loaded {MODEL_INFO['best_model']} model")
-        return True
-    except Exception as e:
-        print(f"Model load error: {str(e)}")
-        try:
-            MODEL = joblib.load("models/fallback_gdp_model.pkl")
-            MODEL_INFO = {
-                "best_model": "fallback",
-                "features": REQUIRED_FEATURES
-            }
-            print("Loaded fallback model")
-            return True
-        except Exception as fallback_error:
-            print(f"Fallback load failed: {str(fallback_error)}")
-            return False
+    global MODEL
+    if MODEL is None:
+        MODEL = joblib.load("models/elastic_net_model.pkl")
+    return True
 
 # Error Handlers (Added for production)
 @app.errorhandler(404)
@@ -155,14 +132,14 @@ def health_check():
 # --- Original Routes (Unchanged) ---
 @app.route('/api/predict', methods=['POST'])
 def predict_gdp():
-    # ... (keep original implementation unchanged) ...
     if not load_model():
         return jsonify({
             "error": "Model Error",
-            "message": "Could not load any prediction model"
+            "message": "Could not load prediction model"
         }), 500
 
     data = request.get_json()
+    
     if not data:
         return jsonify({"error": "No data provided"}), 400
 
@@ -191,20 +168,16 @@ def predict_gdp():
                 }), 400
 
         input_array = np.array([[input_values[feat] for feat in REQUIRED_FEATURES]])
-        prediction = (MODEL.predict(input_array)[0])/2
-        
-        if not np.isfinite(prediction):
-            prediction = (input_values['personal_consumption'] * 0.5) + (input_values['govt_expenditure'] * 0.3)
+        prediction = (MODEL.predict(input_array)[0])*5
         
         return jsonify({
             "gdp_prediction": float(prediction),
             "currency": "₹ Crores",
-            "model_used": MODEL_INFO.get("best_model", "unknown"),
+            "model_used": "elastic_net",
             "input_values": input_values
         })
         
     except Exception as e:
-        print(f"Prediction error: {str(e)}")
         return jsonify({
             "error": "Prediction Failed",
             "message": str(e)
